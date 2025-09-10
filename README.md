@@ -1,79 +1,19 @@
 # date-picker-min-max-repro
 
-![Build](https://github.com/sterlingwes/date-picker-min-max-repro/workflows/Pre%20Merge%20Checks/badge.svg)
+`cd ReproducerApp && yarn && yarn ios`
 
-This is your new React Native Reproducer project.
+Tap `Go to Scheduling` then the first button on the next screen to see the crash:
 
-# Reproducer TODO list
-
-- [x] 1. Create a new reproducer project.
-- [ ] 2. Git clone your repository locally.
-- [ ] 3. Edit the project to reproduce the failure you're seeing.
-- [ ] 4. Push your changes, so that Github Actions can run the CI.
-- [ ] 5. Make sure the repository is public and share the link with the issue you reported.
-
-# How to use this Reproducer
-
-This project has been created with `npx @react-native-community/cli init` and is a vanilla React Native app.
-
-> [!IMPORTANT]  
-> Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/set-up-your-environment) so that you have a working environment locally.
-
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
 ```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+*** Terminating app due to uncaught exception 'NSGenericException', reason: 'Start date cannot be later in time than end date!'
+*** First throw call stack:
+(
+	0   CoreFoundation                      0x00000001804c9690 __exceptionPreprocess + 172
+	1   libobjc.A.dylib                     0x00000001800937cc objc_exception_throw + 72
+	2   Foundation                          0x0000000180f55184 -[_NSConcreteDateInterval initWithStartDate:endDate:] + 396
+	3   UIKitCore                           0x00000001850dfee0 -[_UIDatePickerCalendarView _reloadCalendarView] + 352
+	4   UIKitCore                           0x00000001850dffa4 -[_UIDatePickerCalendarView _reload] + 48
+	5   UIKitCore                           0x0000000185bfd72c -[UIDatePicker _installPickerView:updatingSize:] + 152
+	6   UIKitCore                           0x0000000185bfd650 -[UIDatePicker _updatePickerViewIfNecessary] + 120
+	7   ReproducerApp.debug.dylib           0x0000000107242670 -[RNDateTimePickerComponentView updatePropsForPicker:props:oldProps:
 ```
-
-### For iOS
-
-First, make sure you install dependencies with:
-
-```bash
-cd ios && bundle install && bundle exec pod install
-```
-
-Then you can run the iOS app with:
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
