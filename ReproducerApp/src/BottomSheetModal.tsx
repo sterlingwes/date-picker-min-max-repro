@@ -1,7 +1,9 @@
 import type { BottomSheetModalProps } from '@gorhom/bottom-sheet';
 import { BottomSheetModal as GorhomBottomSheetModal } from '@gorhom/bottom-sheet';
 import { useCallback, useEffect, useRef, type ReactNode } from 'react';
+import { Button } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
+import { BottomSheet } from './BottomSheet';
 
 type Props = BottomSheetModalProps & {
   onClose: () => void;
@@ -38,7 +40,10 @@ const BottomSheetModal = ({ children, onClose, isOpen, ...props }: Props) => {
       ref={bottomSheetRef}
       animateOnMount={!reducedMotion}
     >
-      {isOpen && <>{children}</>}
+      <BottomSheet.SafeAreaView>
+        {isOpen && <>{children}</>}
+        <Button title="Close" onPress={onClose} />
+      </BottomSheet.SafeAreaView>
     </GorhomBottomSheetModal>
   );
 };

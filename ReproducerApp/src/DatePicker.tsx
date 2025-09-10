@@ -9,14 +9,26 @@ type DateRangeOptions = Pick<
   'minimumDate' | 'maximumDate'
 >;
 
-export const DatePicker = () => {
-  const [minDate] = useState<Date | undefined>(new Date('2025-09-09'));
-  const [maxDate, setMaxDate] = useState<Date | undefined>(undefined);
+interface DatePickerProps {
+  minimumDate?: Date;
+  maximumDate?: Date;
+  deferredMaxDate?: Date;
+}
+
+export const DatePicker = ({
+  minimumDate,
+  maximumDate,
+  deferredMaxDate,
+}: DatePickerProps) => {
+  const [minDate] = useState<Date | undefined>(minimumDate);
+  const [maxDate, setMaxDate] = useState<Date | undefined>(maximumDate);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    setMaxDate(new Date('2025-08-09'));
-  }, []);
+    if (deferredMaxDate) {
+      setMaxDate(deferredMaxDate);
+    }
+  }, [deferredMaxDate]);
 
   const onDateChanged = (_: DateTimePickerEvent, newDate?: Date) => {
     if (!newDate) {
@@ -33,7 +45,9 @@ export const DatePicker = () => {
   };
 
   return (
-    <View>
+    <View
+      style={{ minHeight: 300, justifyContent: 'center', alignItems: 'center' }}
+    >
       <RNDateTimePicker
         testID="date-time-picker"
         mode="date"

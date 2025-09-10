@@ -9,7 +9,7 @@ import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { RootNavigation } from './src/Navigation';
+import { RootNavigation } from './src/screens';
 import { NavigationContainer } from '@react-navigation/native';
 
 function App() {

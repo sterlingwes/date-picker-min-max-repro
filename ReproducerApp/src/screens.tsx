@@ -18,7 +18,6 @@ import {
 } from '@react-navigation/native-stack';
 import { Button, Platform, Text, View } from 'react-native';
 import { DatePickerButton } from './DatePickerButton';
-import { useState } from 'react';
 import { DatePicker } from './DatePicker';
 
 const ProtoNavigator = ({
@@ -111,8 +110,21 @@ const HomeScreen = ({
   );
 };
 
+const today = new Date();
+const lowerDate = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() - 2,
+);
+const higherDate = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() + 2,
+);
+
+const Spacer = () => <View style={{ height: 16 }} />;
+
 const SchedulingScreen = () => {
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   return (
     <View
       style={{
@@ -122,12 +134,29 @@ const SchedulingScreen = () => {
         backgroundColor: 'lightgreen',
       }}
     >
-      <Text>Scheduling</Text>
-      <DatePickerButton
-        isOpen={isDatePickerOpen}
-        onClose={() => setIsDatePickerOpen(false)}
-      >
+      <Text>Date Picker Crash Reproducer</Text>
+      <Spacer />
+      <Text>Lower Date: {lowerDate.toLocaleDateString()}</Text>
+      <Text>Higher Date: {higherDate.toLocaleDateString()}</Text>
+      <Spacer />
+      <DatePickerButton label="Open Date Picker w/ deferred min > max scenario (Crashes)">
+        <DatePicker minimumDate={higherDate} deferredMaxDate={lowerDate} />
+      </DatePickerButton>
+
+      <DatePickerButton label="Open Date Picker with no min or max date">
         <DatePicker />
+      </DatePickerButton>
+
+      <DatePickerButton label="Open Date Picker with just a min date">
+        <DatePicker minimumDate={lowerDate} />
+      </DatePickerButton>
+
+      <DatePickerButton label="Open Date Picker with just a max date">
+        <DatePicker maximumDate={higherDate} />
+      </DatePickerButton>
+
+      <DatePickerButton label="Open Date Picker with both min and max date (min < max)">
+        <DatePicker minimumDate={lowerDate} maximumDate={higherDate} />
       </DatePickerButton>
     </View>
   );

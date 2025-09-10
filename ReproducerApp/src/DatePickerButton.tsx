@@ -1,15 +1,17 @@
-import { Button, Platform } from 'react-native';
+import { Button, Platform, Text, View } from 'react-native';
 import { BottomSheet } from './BottomSheet';
 import { useCallback, useState, type ReactNode } from 'react';
 import { FullWindowOverlay } from 'react-native-screens';
 
 interface DatePickerButtonProps {
-  isOpen: boolean;
-  onClose: () => void;
+  label: string;
   children: React.ReactNode;
 }
 
-export const DatePickerButton = ({ children }: DatePickerButtonProps) => {
+export const DatePickerButton = ({
+  children,
+  label,
+}: DatePickerButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClose = () => {
@@ -28,7 +30,7 @@ export const DatePickerButton = ({ children }: DatePickerButtonProps) => {
 
   return (
     <>
-      <Button title="Open Date Picker" onPress={() => setIsOpen(true)} />
+      <Button title={label} onPress={() => setIsOpen(true)} />
       <BottomSheet.Modal
         enableDynamicSizing
         enablePanDownToClose
@@ -36,7 +38,16 @@ export const DatePickerButton = ({ children }: DatePickerButtonProps) => {
         onClose={onClose}
         containerComponent={renderOverlayContainer}
       >
-        <BottomSheet.SafeAreaView>{children}</BottomSheet.SafeAreaView>
+        <View
+          style={{
+            padding: 16,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text>{label.replace('Open', '')}</Text>
+        </View>
+        {children}
       </BottomSheet.Modal>
     </>
   );
